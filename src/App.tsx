@@ -1,6 +1,5 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { useTheme } from './contexts/ThemeContext';
-import { useAuth } from './contexts/AuthContext';
 import { AppStateProvider, useAppState } from './contexts/AppStateContext';
 import { LoadingScreen } from './components/shared/LoadingSpinner';
 import NavigationBar from './components/NavigationBar';
@@ -34,7 +33,6 @@ const NotificationsScreen = lazy(() => import('./components/NotificationsScreen'
 
 function AppContent() {
   const { theme } = useTheme();
-  const { user, authLoading } = useAuth(); // SINGLE SOURCE OF TRUTH for auth
   const { currentScreen, navigate, navigateToHome, logout } = useAppState();
 
   // Initialize Cal.com embed globally
@@ -61,53 +59,8 @@ function AppContent() {
   // Flow: Sign in → Breathing → Assessment → Home
   // If user exists → show Home/Dashboard (or Breathing/Assessments if new user)
   // If user is null → show Login flow
-  useEffect(() => {
-    // Don't navigate while auth is loading
-    if (authLoading) return;
-
-    if (user) {
-      // User is authenticated - check onboarding flow
-      if (['presence', 'onboarding', 'email', 'signin', 'forgotPassword'].includes(currentScreen)) {
-        // Check onboarding flow flags
-        const hasSeenBreathing = localStorage.getItem('hasSeenBreathing');
-        const hasSeenInitialAssessment = localStorage.getItem('hasSeenInitialAssessment');
-
-        // Flow: Sign in → Breathing → Assessment → Home
-        if (!hasSeenBreathing) {
-          // First time: go to breathing screen
-          navigate('breathing');
-        } else if (!hasSeenInitialAssessment) {
-          // After breathing: go to assessment screen
-          navigate('assessments');
-        } else {
-          // After assessment: go to home
-          navigate('home');
-        }
-      }
-    } else {
-      // User is not authenticated - show login flow
-      if (!['presence', 'onboarding', 'email', 'signin', 'forgotPassword'].includes(currentScreen)) {
-        navigate('presence');
-      }
-    }
-  }, [user, currentScreen, navigate, authLoading]);
-
-  // Auto-navigate from presence directly to sign-in screen (skipping onboarding and email)
-  // Matching Flutter app: 2000ms delay (2 seconds)
-  useEffect(() => {
-    // Don't auto-navigate if auth is loading or user is authenticated
-    if (authLoading || user) return;
-
-    if (currentScreen === 'presence') {
-      const timer = setTimeout(() => {
-        if (!user && !authLoading) { // Double-check user is still null and auth is resolved
-          navigate('signin'); // Skip onboarding and email, go directly to sign-in screen
-        }
-      }, 2000); // 2000ms (2 seconds) - matching Flutter app
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentScreen, user, navigate, authLoading]);
+  // Authentication routing logic has been removed as the app is now in "no-login" mode.
+  // The app will now start directly on the Home screen.
 
   const handleOnboardingContinue = () => {
     navigate('email');
@@ -139,12 +92,7 @@ function AppContent() {
 
   const bgColor = theme === 'dark' ? '#1a1a1a' : '#F7F5F2';
 
-  // PART 2: BLOCK UI UNTIL AUTH RESOLVES
-  // This prevents auth flicker and redirect loops
-  // Must be AFTER all hooks (Rules of Hooks)
-  if (authLoading) {
-    return <LoadingScreen />;
-  }
+
 
   return (
     <div

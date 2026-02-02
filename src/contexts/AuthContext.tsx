@@ -31,33 +31,16 @@ interface AuthProviderProps {
  * - No manual navigation - let App.tsx handle routing based on user state
  */
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState<boolean>(true);
+  // Hardcoded guest user for "no-login" mode
+  const guestUser = {
+    uid: 'guest_user',
+    email: 'guest@mindspace.app',
+    displayName: 'Guest User',
+    photoURL: null,
+  } as User;
 
-  useEffect(() => {
-    // Set session persistence FIRST
-    setPersistence(auth, browserLocalPersistence)
-      .then(() => {
-        logger.debug('[AuthProvider] Session persistence set to local');
-      })
-      .catch((error) => {
-        logger.error('[AuthProvider] Error setting persistence:', error);
-      });
-
-    // SINGLE onAuthStateChanged listener - this is the ONLY place auth state is checked
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      logger.debug('[AuthProvider] Auth state changed:', firebaseUser ? `User: ${firebaseUser.email}` : 'No user');
-      
-      setUser(firebaseUser);
-      setAuthLoading(false); // Auth state resolved
-    });
-
-    // Cleanup on unmount
-    return () => {
-      logger.debug('[AuthProvider] Cleaning up auth listener');
-      unsubscribe();
-    };
-  }, []); // Empty deps - only run once on mount
+  const [user] = useState<User | null>(guestUser);
+  const [authLoading] = useState<boolean>(false);
 
   return (
     <AuthContext.Provider value={{ user, authLoading }}>

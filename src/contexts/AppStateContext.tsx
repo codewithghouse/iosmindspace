@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { User } from 'firebase/auth';
-import { createUserProfile, getUserProfile } from '../services/userService';
+import { getUserProfile } from '../services/userService';
 import { UserProfile } from '../types';
 import { logout as firebaseLogout } from '../services/authService';
 import { adaptUserFromFirestore } from '../utils/firestoreAdapter';
@@ -43,22 +43,22 @@ export const useAppState = () => {
     console.warn('useAppState called outside AppStateProvider - using default values');
     return {
       currentScreen: 'presence' as ScreenType,
-      navigate: () => {},
-      navigateToChat: () => {},
-      navigateToHome: () => {},
-      navigateToProfile: () => {},
-      navigateToAssessments: () => {},
-      navigateToAssessment: () => {},
-      refreshUserProfile: async () => {},
-      navigateToBooking: () => {},
-      navigateToJournal: () => {},
-      navigateToSelfCare: () => {},
-      navigateToToolsSounds: () => {},
-      navigateToArticles: () => {},
-      navigateToBreathing: () => {},
-      navigateToInsights: () => {},
-      navigateToCall: () => {},
-      logout: () => {},
+      navigate: () => { },
+      navigateToChat: () => { },
+      navigateToHome: () => { },
+      navigateToProfile: () => { },
+      navigateToAssessments: () => { },
+      navigateToAssessment: () => { },
+      refreshUserProfile: async () => { },
+      navigateToBooking: () => { },
+      navigateToJournal: () => { },
+      navigateToSelfCare: () => { },
+      navigateToToolsSounds: () => { },
+      navigateToArticles: () => { },
+      navigateToBreathing: () => { },
+      navigateToInsights: () => { },
+      navigateToCall: () => { },
+      logout: () => { },
       isAuthenticated: false,
       userName: 'User',
       userEmail: '',
@@ -87,15 +87,10 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   // Get auth state from AuthProvider (SINGLE SOURCE OF TRUTH)
   const { user } = useAuth();
   const isAuthenticated = !!user;
-  
-  const [currentScreen, setCurrentScreen] = useState<ScreenType>('presence');
+
+  const [currentScreen, setCurrentScreen] = useState<ScreenType>('home');
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isLoadingProfile, setIsLoadingProfile] = useState<boolean>(false);
-  
-  const navigationRef = useRef<{ lastNavigation: number; targetScreen: ScreenType | null }>({ 
-    lastNavigation: 0, 
-    targetScreen: null
-  });
 
   // Sync userProfile when user changes (from AuthProvider)
   useEffect(() => {
@@ -107,46 +102,22 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
 
     // User exists - fetch/create profile
     setIsLoadingProfile(true);
-    
+
     const loadUserProfile = async () => {
       try {
         // Create temp profile from auth data immediately
-        const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+        const displayName = user.displayName || user.email?.split('@')[0] || 'Guest User';
         const tempProfile = adaptUserFromFirestore({
-          uid: user.uid,
-          email: user.email || '',
+          uid: 'guest_user',
+          email: 'guest@mindspace.app',
           display_name: displayName,
-          photo_url: user.photoURL || '',
+          photo_url: '',
           theme: 'dark',
           language: 'en',
           created_time: new Date(),
           updated_at: new Date()
         });
         setUserProfile(tempProfile);
-        
-        // Fetch or create profile from Firestore in background
-        try {
-          let profile = await getUserProfile(user.uid);
-          
-          if (!profile) {
-            // Create profile if it doesn't exist
-            profile = await createUserProfile(
-              user.uid,
-              user.email || '',
-              displayName,
-              user.photoURL || undefined
-            );
-          }
-          
-          if (profile) {
-            setUserProfile(profile);
-          }
-        } catch (error: any) {
-          // If Firestore is offline, keep using temp profile
-          if (error.code !== 'unavailable' && !error.message?.includes('offline')) {
-            logger.error('Error fetching user profile:', error);
-          }
-        }
       } catch (error) {
         logger.error('Error loading user profile:', error);
       } finally {
@@ -161,35 +132,19 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
     if (userProfile?.displayName) return userProfile.displayName;
     if (user?.displayName) return user.displayName;
     if (user?.email) return user.email.split('@')[0];
-    return 'User';
+    return 'Guest User';
   }, [user, userProfile]);
 
   const getUserEmail = useCallback(() => {
     if (userProfile?.email) return userProfile.email;
     if (user?.email) return user.email;
-    return '';
+    return 'guest@mindspace.app';
   }, [user, userProfile]);
 
   const navigate = useCallback((screen: ScreenType) => {
-    logger.debug(`[Navigate] Attempting to navigate to: ${screen}, isAuthenticated: ${isAuthenticated}, currentScreen: ${currentScreen}`);
-    
-    // Prevent navigation to auth screens if user is authenticated
-    if (isAuthenticated && ['presence', 'onboarding', 'email', 'signin', 'forgotPassword'].includes(screen)) {
-      logger.debug(`[Navigate] BLOCKED - User is authenticated, cannot navigate to ${screen}. Redirecting to home.`);
-      setCurrentScreen('home');
-      return;
-    }
-    
-    // Prevent navigation to authenticated screens if user is not authenticated  
-    if (!isAuthenticated && ['home', 'chat', 'assessments', 'profile', 'journal', 'selfcare', 'toolsSounds', 'articles', 'assessmentDetail', 'breathing', 'insights', 'booking', 'call', 'privacy', 'help', 'about', 'notifications'].includes(screen)) {
-      logger.debug(`[Navigate] BLOCKED - User is not authenticated, cannot navigate to ${screen}. Going to signin.`);
-      setCurrentScreen('signin');
-      return;
-    }
-    
+    logger.debug(`[Navigate] Navigating to: ${screen}`);
     setCurrentScreen(screen);
-    logger.debug(`[Navigate] ✅ Successfully navigated to: ${screen}`);
-  }, [isAuthenticated, currentScreen]);
+  }, []);
 
   const navigateToChat = useCallback(() => navigate('chat'), [navigate]);
   const navigateToHome = useCallback(() => navigate('home'), [navigate]);

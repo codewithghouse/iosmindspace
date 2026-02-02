@@ -1,0 +1,1445 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme Variables */
+:root {
+  --bg-primary: #F7F5F2;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(255, 255, 255, 0.85);
+  --bg-base: #F7F5F2;
+  /* Base background for html/body */
+  --text-primary: #1A1A1A;
+  --text-secondary: #4A4A4A;
+  --border-color: rgba(162, 173, 156, 0.4);
+  --accent-color: #7A8A7A;
+  --accent-light: #6A7A6A;
+
+  /* Gradient Colors - Enhanced for better visibility */
+  --gradient-primary: linear-gradient(135deg, #7A8A7A, #6A7A6A);
+  --gradient-secondary: linear-gradient(135deg, #8A9A8A, #7A8A7A);
+  --gradient-tertiary: linear-gradient(135deg, #9AAA9A, #8A9A8A);
+  --gradient-quaternary: linear-gradient(135deg, #7A8A7A, #5A6A5A);
+
+  /* Glassmorphism - Enhanced opacity */
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(162, 173, 156, 0.5);
+  --glass-overlay: rgba(255, 255, 255, 0.3);
+
+  /* Shadows - Enhanced for better depth */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.18);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: rgba(40, 40, 40, 0.8);
+  --bg-tertiary: rgba(50, 50, 50, 0.6);
+  --bg-base: #1a1a1a;
+  /* Base background for html/body */
+  --text-primary: #E5E5E5;
+  --text-secondary: #B0B0B0;
+  --border-color: rgba(100, 100, 100, 0.3);
+  --accent-color: #7A8A7A;
+  --accent-light: #6A7A6A;
+
+  /* Gradient Colors - Dark Variants */
+  --gradient-primary: linear-gradient(135deg, #4A5A4A, #3A4A3A);
+  --gradient-secondary: linear-gradient(135deg, #5A6A5A, #4A5A4A);
+  --gradient-tertiary: linear-gradient(135deg, #6A7A6A, #5A6A5A);
+  --gradient-quaternary: linear-gradient(135deg, #4A5A4A, #2A3A2A);
+
+  /* Glassmorphism - Dark */
+  --glass-bg: rgba(40, 40, 40, 0.7);
+  --glass-border: rgba(120, 120, 120, 0.2);
+  --glass-overlay: rgba(255, 255, 255, 0.05);
+
+  /* Shadows - Dark (lighter shadows) */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Smooth transitions for CSS custom properties - natural theme changes */
+:root,
+[data-theme] {
+  transition: background-color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure theme-aware elements transition smoothly */
+div,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+section,
+article,
+aside,
+nav,
+header,
+footer,
+main {
+  transition: background-color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Override for interactive elements that need instant feedback */
+button:active,
+.touch-target:active,
+input:focus,
+textarea:focus,
+button:focus,
+a:focus {
+  transition: background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Theme Transition Utility - Natural, gradual transitions like sunset/sunrise */
+.theme-transition {
+  transition: background-color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth transitions for all theme-aware properties */
+[data-theme] {
+  transition: background-color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Standard Responsive Viewport */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100dvh;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  /* Improve font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-base, #1a1a1a);
+  box-sizing: border-box;
+  /* Normal scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-base, #1a1a1a);
+  box-sizing: border-box;
+}
+
+
+
+/* Global Font - Fira Sans */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+}
+
+body {
+  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+}
+
+/* Allow scrolling only in specific scrollable containers */
+/* Smooth scrolling for all scrollable containers */
+.scrollable-container {
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  overscroll-behavior: contain !important;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scroll-behavior: smooth;
+  /* Force hardware acceleration for smooth scrolling */
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+/* Hide scrollbars for native app-like experience */
+.scrollable-container::-webkit-scrollbar,
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable-container,
+.overflow-x-auto,
+.overflow-y-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Optimize scrollable areas - only for containers with scrollable-container class */
+.scrollable-container[class*="overflow-y-auto"],
+.scrollable-container[class*="overflow-y-scroll"] {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  /* Force hardware acceleration for smooth scrolling */
+  transform: translateZ(0);
+  will-change: scroll-position;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+/* Screen reader only class for accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Typing indicator animation */
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Message animations */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-enter {
+  animation: messageSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Enhanced typing indicator wave */
+@keyframes typingWave {
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+
+  30% {
+    transform: translateY(-6px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  animation: typingWave 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+/* Status pulse animation */
+@keyframes statusPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Date separator animation */
+@keyframes dateFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.date-separator {
+  animation: dateFadeIn 0.3s ease-out;
+}
+
+/* Floating Skip Button - Text Only */
+.floating-skip-button {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom, 20px);
+  right: 20px;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  z-index: 1000;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-skip-button:active {
+  transform: scale(0.95);
+}
+
+.floating-skip-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Mobile Safe Areas */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Baseline Layout (No Safe Area Hacks) */
+.safe-top {
+  padding-top: 0px;
+}
+
+.safe-bottom {
+  padding-bottom: 0px;
+}
+
+.safe-left {
+  padding-left: 0px;
+}
+
+.safe-right {
+  padding-right: 0px;
+}
+
+/* Bottom Navigation Bar - Plain Baseline */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 0px;
+  z-index: 100;
+}
+
+/* Ensure content doesn't get hidden behind the fixed nav */
+.main-content {
+  padding-bottom: 80px;
+  /* Fixed standard padding */
+}
+
+/* Reset iOS-specific refinements to baseline */
+.ios .bottom-nav button,
+.ios .bottom-nav a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Mobile Touch Targets */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Enhanced Touch Targets for Bottom Nav on iOS (since nav overlaps gesture area) */
+.ios .bottom-nav button,
+.ios .bottom-nav a {
+  min-height: 44px;
+  /* Apple minimum touch size */
+  padding-bottom: 8px;
+}
+
+/* Cloud background animation - single organic cloud, left to right */
+@keyframes cloudMove {
+  0% {
+    transform: translateX(-40vw) scale(0.98);
+  }
+
+  50% {
+    transform: translateX(50vw) scale(1.01);
+  }
+
+  100% {
+    transform: translateX(140vw) scale(1);
+  }
+}
+
+/* Single organic cloud - matches reference image exactly */
+.cloud-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+  /* Ensure it doesn't interfere with scrolling */
+  touch-action: none;
+  -webkit-overflow-scrolling: auto;
+  /* Fixed positioning to prevent scrolling with content */
+}
+
+.cloud {
+  position: absolute;
+  top: 35%;
+  left: -40%;
+  width: 420px;
+  height: auto;
+  max-width: 500px;
+  opacity: 0.25;
+  animation: cloudMove 90s linear infinite;
+  will-change: transform;
+  pointer-events: none;
+  object-fit: contain;
+  mix-blend-mode: normal;
+  /* Ensure visibility */
+  display: block;
+  visibility: visible;
+  /* Optimize for smooth scrolling */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.cloud-middle {
+  position: absolute;
+  top: 50%;
+  left: -40%;
+  width: 420px;
+  height: auto;
+  max-width: 500px;
+  opacity: 0.25;
+  animation: cloudMove 100s linear infinite;
+  animation-delay: -30s;
+  will-change: transform;
+  pointer-events: none;
+  object-fit: contain;
+  mix-blend-mode: normal;
+  display: block;
+  visibility: visible;
+  /* Optimize for smooth scrolling */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.cloud-lower {
+  position: absolute;
+  top: 65%;
+  left: -40%;
+  width: 420px;
+  height: auto;
+  max-width: 500px;
+  opacity: 0.25;
+  animation: cloudMove 110s linear infinite;
+  animation-delay: -60s;
+  will-change: transform;
+  pointer-events: none;
+  object-fit: contain;
+  mix-blend-mode: normal;
+  display: block;
+  visibility: visible;
+  /* Optimize for smooth scrolling */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Dark mode - increased cloud visibility */
+[data-theme="dark"] .cloud,
+[data-theme="dark"] .cloud-middle,
+[data-theme="dark"] .cloud-lower {
+  opacity: 0.35;
+}
+
+/* Dark mode - moon adjustments for better visibility */
+[data-theme="dark"] .moon-container {
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .moon {
+  opacity: 0.8;
+  box-shadow:
+    inset -12px -12px 0 rgba(190, 190, 210, 0.5),
+    inset 8px 8px 0 rgba(230, 230, 245, 0.3),
+    0 0 25px rgba(190, 190, 210, 0.35),
+    0 0 50px rgba(170, 170, 190, 0.25);
+}
+
+[data-theme="dark"] .moon-glow {
+  background: radial-gradient(circle, rgba(200, 200, 220, 0.15) 0%, rgba(180, 180, 200, 0.1) 40%, transparent 70%);
+}
+
+/* Light mode - sun adjustments */
+[data-theme="light"] .sun-container {
+  opacity: 0.7;
+}
+
+[data-theme="light"] .sun {
+  opacity: 0.75;
+}
+
+/* Sun with light rays animation - Subtle for distant sun */
+@keyframes sunPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.02);
+    opacity: 0.5;
+  }
+}
+
+@keyframes rayRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sun and Moon Container Styles - Small and distant */
+.sun-container,
+.moon-container {
+  position: fixed;
+  top: 4%;
+  right: 3%;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+  transform: scale(0.7);
+  transform-origin: center;
+  transition: all 5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sun - Small, distant, yellowish */
+.sun {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 120, 0.8) 0%, rgba(255, 200, 90, 0.6) 50%, rgba(255, 180, 70, 0.4) 100%);
+  box-shadow: 0 0 25px rgba(255, 220, 120, 0.4), 0 0 50px rgba(255, 200, 90, 0.3), 0 0 75px rgba(255, 180, 70, 0.2);
+  filter: blur(0.8px);
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+/* Sun Glow - Dim yellowish */
+.sun-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 120, 0.2) 0%, rgba(255, 200, 90, 0.15) 30%, transparent 70%);
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+/* Moon - Small, thick, distant */
+.moon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(230, 230, 245, 0.95) 0%, rgba(210, 210, 230, 0.85) 30%, rgba(190, 190, 210, 0.7) 60%, rgba(170, 170, 190, 0.5) 100%);
+  box-shadow:
+    inset -12px -12px 0 rgba(190, 190, 210, 0.5),
+    inset 8px 8px 0 rgba(230, 230, 245, 0.3),
+    0 0 25px rgba(190, 190, 210, 0.35),
+    0 0 50px rgba(170, 170, 190, 0.25);
+  filter: blur(0.4px);
+  border: 3px solid rgba(210, 210, 230, 0.5);
+  position: relative;
+}
+
+.moon::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 25%;
+  height: 25%;
+  border-radius: 50%;
+  background: rgba(190, 190, 210, 0.4);
+  box-shadow: inset 2px 2px 0 rgba(230, 230, 245, 0.3);
+}
+
+/* Moon Glow - Dim */
+.moon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180%;
+  height: 180%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(190, 190, 210, 0.18) 0%, rgba(170, 170, 190, 0.12) 40%, transparent 70%);
+  pointer-events: none;
+  filter: blur(6px);
+}
+
+/* SVG-based Sun/Moon transition styles - Small and distant */
+.sun-moon-svg-container {
+  position: fixed;
+  top: 4%;
+  right: 3%;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15));
+  opacity: 0.7;
+  transform: scale(0.7);
+  transform-origin: center;
+  transition: all 5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-moon-svg-container svg {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transform-style: preserve-3d;
+  animation: float3D 6s ease-in-out infinite;
+}
+
+/* Natural floating animation - gentle 3D movement */
+@keyframes float3D {
+
+  0%,
+  100% {
+    transform: translateY(0px) translateZ(0px) rotateX(0deg);
+  }
+
+  25% {
+    transform: translateY(-8px) translateZ(5px) rotateX(2deg);
+  }
+
+  50% {
+    transform: translateY(-12px) translateZ(8px) rotateX(0deg);
+  }
+
+  75% {
+    transform: translateY(-8px) translateZ(5px) rotateX(-2deg);
+  }
+}
+
+/* Subtle pulsing for natural breathing effect */
+@keyframes sunMoonBreathe {
+
+  0%,
+  100% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.02) translateZ(3px);
+    opacity: 0.98;
+  }
+}
+
+.sun-moon-svg-container svg g {
+  animation: sunMoonBreathe 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Optimized smooth transitions for SVG elements - using attribute animations */
+.sun-moon-svg-container #overlay {
+  transition: cx 5s cubic-bezier(0.4, 0, 0.2, 1),
+    cy 5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: cx, cy;
+}
+
+.sun-moon-svg-container #donut {
+  transition: fill 5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: fill;
+}
+
+.sun-moon-svg-container circle[fill="url(#sunMoonGlow)"] {
+  transition: opacity 5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
+
+/* Twinkling Stars */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-small {
+  width: 1px;
+  height: 1px;
+  animation-duration: 2s;
+}
+
+.star-medium {
+  width: 2px;
+  height: 2px;
+  animation-duration: 3s;
+}
+
+.star-large {
+  width: 3px;
+  height: 3px;
+  animation-duration: 4s;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Staggered twinkling for different stars */
+.star:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.star:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.star:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+.star:nth-child(5) {
+  animation-delay: 2s;
+}
+
+.star:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.star:nth-child(7) {
+  animation-delay: 0.8s;
+}
+
+.star:nth-child(8) {
+  animation-delay: 1.3s;
+}
+
+.star:nth-child(9) {
+  animation-delay: 1.8s;
+}
+
+.star:nth-child(10) {
+  animation-delay: 2.3s;
+}
+
+.star:nth-child(11) {
+  animation-delay: 0.2s;
+}
+
+.star:nth-child(12) {
+  animation-delay: 0.7s;
+}
+
+.star:nth-child(13) {
+  animation-delay: 1.2s;
+}
+
+.star:nth-child(14) {
+  animation-delay: 1.7s;
+}
+
+.star:nth-child(15) {
+  animation-delay: 2.2s;
+}
+
+.star:nth-child(16) {
+  animation-delay: 0.4s;
+}
+
+.star:nth-child(17) {
+  animation-delay: 0.9s;
+}
+
+.star:nth-child(18) {
+  animation-delay: 1.4s;
+}
+
+.star:nth-child(19) {
+  animation-delay: 1.9s;
+}
+
+.star:nth-child(20) {
+  animation-delay: 2.4s;
+}
+
+/* Menu dropdown animation */
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navigation bar animations */
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.animate-menuSlideDown {
+  animation: menuSlideDown 0.2s ease-out;
+}
+
+/* Pulse glow animation for call screen */
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 60px rgba(162, 173, 156, 0.4), 0 0 100px rgba(162, 173, 156, 0.2), inset 0 0 40px rgba(162, 173, 156, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 80px rgba(162, 173, 156, 0.6), 0 0 120px rgba(162, 173, 156, 0.3), inset 0 0 50px rgba(162, 173, 156, 0.15);
+  }
+}
+
+/* Scrollbar hide utility - for horizontal scrolling elements */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  /* Smooth scrolling for iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Explore card animations */
+.explore-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, min-height 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+}
+
+.explore-card:hover:not(.expanded) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(162, 173, 156, 0.15);
+}
+
+/* Category list animations */
+.category-list {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bottom Sheet Panel Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+.explore-scroll-container {
+  mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%);
+  -webkit-mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%);
+  /* Smooth scrolling optimization */
+  will-change: scroll-position;
+  transform: translateZ(0);
+  /* Force GPU acceleration */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Self-Care Card Drag Animation */
+@keyframes cardDragToCorner {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    /* Target: top-left corner (16px from left, ~80px from top including safe area) */
+    transform: translate(calc(16px - var(--start-x, 0px)), calc(calc(env(safe-area-inset-top, 0px) + 80px) - var(--start-y, 0px))) scale(0.15);
+    opacity: 0.95;
+  }
+}
+
+@keyframes cardReturn {
+  0% {
+    transform: translate(calc(16px - var(--start-x, 0px)), calc(calc(env(safe-area-inset-top, 0px) + 80px) - var(--start-y, 0px))) scale(0.15);
+    opacity: 0.95;
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tipsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tipCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Animated Card - during drag */
+.animated-card {
+  position: fixed;
+  top: var(--start-y, 0px);
+  left: var(--start-x, 0px);
+  width: var(--start-width, 0px);
+  height: var(--start-height, 0px);
+  z-index: 1000;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform-origin: top left;
+  overflow: hidden;
+  /* GPU acceleration */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.animated-card.card-drag-to-corner {
+  animation: cardDragToCorner 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animated-card.card-return {
+  animation: cardReturn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animated-card-inner {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 209, 202, 0.5);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Ensure text doesn't overflow during animation */
+  text-overflow: ellipsis;
+}
+
+/* Corner Badge */
+.corner-badge {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 72px);
+  left: 16px;
+  z-index: 999;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  outline: none;
+  will-change: transform;
+}
+
+.corner-badge:active {
+  transform: scale(0.92);
+}
+
+.corner-badge:focus-visible {
+  outline: 2px solid rgba(162, 173, 156, 0.5);
+  outline-offset: 2px;
+  border-radius: 20px;
+}
+
+.corner-badge-content {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(162, 173, 156, 0.95), rgba(152, 163, 146, 0.95));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(162, 173, 156, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(162, 173, 156, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: cornerBadgeAppear 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  will-change: transform, opacity;
+}
+
+.corner-badge-text {
+  color: #F7F5F2;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  letter-spacing: -0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes cornerBadgeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal Animations */
+@keyframes modalBackdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalContentEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-enter {
+  animation: modalContentEnter 0.3s ease-out both;
+}
+
+/* Ensure modal backdrop has proper animation */
+.fixed.inset-0.bg-black\/40.backdrop-blur-sm {
+  animation: modalBackdropEnter 0.3s ease-out both;
+}
+
+/* Premium Card Hover Effects */
+@keyframes cardGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 20px rgba(162, 173, 156, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 8px 30px rgba(162, 173, 156, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Smooth scale animation for cards */
+.group:hover {
+  transform: translateY(-2px);
+}
+
+.group:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Tips Fade In */
+.tips-fade-in {
+  animation: tipsFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+  will-change: opacity, transform;
+}
+
+/* Tip Card Enter - staggered */
+.tip-card-enter {
+  animation: tipCardEnter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  will-change: opacity, transform;
+}
+
+.tips-list-expanded {
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+/* 3D Perspective for card stack */
+.perspective-1000 {
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+
+/* Card stack animations */
+@keyframes cardStackEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9) rotate(5deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* Ping animation for call button */
+@keyframes ping {
+
+  75%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Sphere Pulse Animation for Call Screen */
+@keyframes spherePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.95;
+  }
+}
+
+/* Wave Ripple Animation for Call Screen */
+@keyframes waveRipple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Audio Wave Animation for Call Screen - Speaking Visualization */
+@keyframes audioWave {
+
+  0%,
+  100% {
+    transform: scaleY(0.6);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Breathing Screen Animations */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes notificationSlideDown {
+  0% {
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
+}
+
+/* Gamification Animations */
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(162, 173, 156, 0.4);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(162, 173, 156, 0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(162, 173, 156, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(162, 173, 156, 0.8), 0 0 30px rgba(162, 173, 156, 0.6);
+  }
+}
+
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+.animate-pulse-gamification {
+  animation: pulse 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 1s ease-in-out infinite;
+}
+
+/* Install Prompt Animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

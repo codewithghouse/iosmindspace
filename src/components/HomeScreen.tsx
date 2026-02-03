@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+
 import { useTheme } from '../contexts/ThemeContext';
 import { useAppState } from '../contexts/AppStateContext';
 import { HomeHeader } from './home/HomeHeader';
@@ -14,25 +14,9 @@ interface HomeScreenProps {
 export default function HomeScreen({ isVisible }: HomeScreenProps) {
   const { theme } = useTheme();
   const { navigateToChat, navigateToJournal, navigateToSelfCare, navigateToToolsSounds, navigateToArticles } = useAppState();
-  const [isPaused, setIsPaused] = useState(false);
 
-  // Generate random star positions (memoized for performance)
-  const stars = useMemo(() => {
-    if (theme !== 'dark') return [];
-    const starArray = [];
-    const starCount = 20;
-    for (let i = 0; i < starCount; i++) {
-      const size = Math.random() < 0.33 ? 'small' : Math.random() < 0.66 ? 'medium' : 'large';
-      starArray.push({
-        id: i,
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        size: size,
-        delay: Math.random() * 2
-      });
-    }
-    return starArray;
-  }, [theme]);
+
+
 
   const bgColor = 'var(--bg-primary)';
   const textPrimary = 'var(--text-primary)';
@@ -41,36 +25,16 @@ export default function HomeScreen({ isVisible }: HomeScreenProps) {
 
   return (
     <>
-      {/* Twinkling Stars - Only in dark theme */}
-      {theme === 'dark' && (
-        <div className="stars-container">
-          {stars.map((star) => (
-            <div
-              key={star.id}
-              className={`star star-${star.size}`}
-              style={{
-                top: star.top,
-                left: star.left,
-                animationDelay: `${star.delay}s`
-              }}
-            />
-          ))}
-        </div>
-      )}
-      
-      {/* Multiple organic clouds - Fixed position, outside scrollable container */}
-      <div className="cloud-wrapper">
-        <img src="/assets/cloud.png" alt="" className="cloud" />
-        <img src="/assets/cloud.png" alt="" className="cloud-middle" />
-        <img src="/assets/cloud.png" alt="" className="cloud-lower" />
-      </div>
-      
-      <div 
-        className="absolute inset-0 min-h-screen w-full overflow-y-auto safe-top safe-bottom pb-48 theme-transition scrollable-container" 
-        style={{ 
-          WebkitOverflowScrolling: 'touch', 
-          scrollBehavior: 'smooth', 
-          overscrollBehavior: 'contain', 
+
+
+
+
+      <div
+        className="absolute inset-0 min-h-screen w-full overflow-y-auto safe-top safe-bottom pb-48 theme-transition scrollable-container"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          scrollBehavior: 'smooth',
+          overscrollBehavior: 'contain',
           touchAction: 'pan-y',
           backgroundColor: bgColor
         }}
@@ -82,11 +46,11 @@ export default function HomeScreen({ isVisible }: HomeScreenProps) {
         <div className="px-4 py-6 pb-40 safe-bottom relative z-10 min-h-[calc(100vh+700px)]">
           {/* Health & Mood Card */}
           <div className="mb-12">
-            <div className="w-full rounded-3xl p-5 transition-all duration-300 shadow-lg relative overflow-hidden backdrop-blur-xl border theme-transition" 
-                 style={{ 
-                   backgroundColor: theme === 'dark' ? 'rgba(40, 40, 40, 0.8)' : 'rgba(255, 255, 255, 0.95)', 
-                   borderColor: theme === 'dark' ? 'rgba(100, 100, 100, 0.3)' : 'rgba(212, 209, 202, 0.5)' 
-                 }}>
+            <div className="w-full rounded-3xl p-5 transition-all duration-300 shadow-md relative overflow-hidden backdrop-blur-xl border theme-transition"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(40, 40, 40, 0.8)' : 'rgba(255, 255, 255, 0.95)',
+                borderColor: theme === 'dark' ? 'rgba(100, 100, 100, 0.3)' : 'rgba(212, 209, 202, 0.5)'
+              }}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
                   <HealthStatusCard />
@@ -183,7 +147,7 @@ export default function HomeScreen({ isVisible }: HomeScreenProps) {
               ]}
               autoRotate={true}
               rotateInterval={3000}
-              isPaused={isPaused}
+
             />
           </div>
 

@@ -3,7 +3,7 @@ import { useTheme } from './contexts/ThemeContext';
 import { AppStateProvider, useAppState } from './contexts/AppStateContext';
 import { LoadingScreen } from './components/shared/LoadingSpinner';
 import NavigationBar from './components/NavigationBar';
-import SunMoonSVG from './components/SunMoonSVG';
+
 import { getCalApi } from '@calcom/embed-react';
 import { resetPassword } from './services/authService';
 
@@ -229,7 +229,7 @@ function AppContent() {
           onNavigate={(screen) => navigate(screen as any)}
         />
       )}
-      <SunMoonSVG />
+
 
       {/* Hidden Cal.com booking button */}
       <button

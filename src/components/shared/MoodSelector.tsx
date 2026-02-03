@@ -7,12 +7,12 @@ interface MoodSelectorProps {
   showCurrentMood?: boolean;
 }
 
-export const MoodSelector: React.FC<MoodSelectorProps> = ({ 
-  showCurrentMood = true 
+export const MoodSelector: React.FC<MoodSelectorProps> = ({
+  showCurrentMood = true
 }) => {
   const { theme } = useTheme();
   const { currentMood, getMoodById, todayMood, isLoading } = useMood();
-  
+
   const textPrimary = theme === 'dark' ? '#E5E5E5' : '#1A1A1A';
   const textSecondary = theme === 'dark' ? '#B0B0B0' : '#4A4A4A';
   const borderColor = theme === 'dark' ? 'rgba(100, 100, 100, 0.3)' : 'rgba(212, 209, 202, 0.5)';
@@ -23,13 +23,13 @@ export const MoodSelector: React.FC<MoodSelectorProps> = ({
   if (isLoading) {
     return (
       <div className="flex-1">
-        <h3 className="text-sm font-medium mb-3 theme-transition" 
-            style={{ color: textSecondary, fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif' }}>
+        <h3 className="text-sm font-medium mb-3 theme-transition"
+          style={{ color: textSecondary }}>
           Your Mood
         </h3>
         <div className="flex flex-col items-center gap-2">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 theme-transition animate-pulse" 
-               style={{ borderColor: borderColor }}>
+          <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 theme-transition animate-pulse"
+            style={{ borderColor: borderColor }}>
             <div className="w-8 h-8 rounded-full" style={{ backgroundColor: borderColor }} />
           </div>
         </div>
@@ -39,8 +39,8 @@ export const MoodSelector: React.FC<MoodSelectorProps> = ({
 
   return (
     <div className="flex-1">
-      <h3 className="text-sm font-medium mb-3 theme-transition" 
-          style={{ color: textSecondary, fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif' }}>
+      <h3 className="text-sm font-medium mb-3 theme-transition"
+        style={{ color: textSecondary }}>
         Your Mood
       </h3>
       <div className="flex flex-col items-center gap-2">
@@ -57,18 +57,18 @@ export const MoodSelector: React.FC<MoodSelectorProps> = ({
             >
               {currentMoodData.emoji}
               {todayMood && (
-                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-500 border-2" 
-                     style={{ borderColor: theme === 'dark' ? '#1a1a1a' : '#F7F5F2' }} 
-                     title="Saved today" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-500 border-2"
+                  style={{ borderColor: theme === 'dark' ? '#1a1a1a' : '#F7F5F2' }}
+                  title="Saved today" />
               )}
             </div>
-            <span className="text-xs font-medium theme-transition" 
-                  style={{ color: textPrimary, fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif' }}>
+            <span className="text-xs font-medium theme-transition"
+              style={{ color: textPrimary }}>
               {currentMoodData.label}
             </span>
             {todayMood && (
-              <span className="text-[10px] font-light theme-transition" 
-                    style={{ color: textSecondary, fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif' }}>
+              <span className="text-[10px] font-light theme-transition"
+                style={{ color: textSecondary }}>
                 Saved today
               </span>
             )}
@@ -107,7 +107,7 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
   // Check if mood already selected today
   const isMoodSelectedToday = !!todayMood;
   const isDisabled = isMoodSelectedToday || isSaving || isLoading;
-  
+
   // Use currentMood or selectedMood for highlighting (currentMood is the saved one, selectedMood is the one being selected)
   const highlightedMood = currentMood || selectedMood;
 
@@ -116,9 +116,8 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
       <div className="flex items-center justify-between mb-4">
         <h2
           className="text-[18px] font-medium transition-colors duration-300"
-          style={{ 
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif', 
-            color: textPrimary 
+          style={{
+            color: textPrimary
           }}
         >
           Daily mood log
@@ -126,19 +125,18 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
         {isMoodSelectedToday && (
           <span
             className="text-xs font-light px-2 py-1 rounded-full theme-transition"
-            style={{ 
+            style={{
               color: textSecondary,
               backgroundColor: theme === 'dark' ? 'rgba(100, 100, 100, 0.2)' : 'rgba(212, 209, 202, 0.3)',
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif'
             }}
           >
             Already logged today
           </span>
         )}
       </div>
-      <div 
-        className="flex gap-3 pb-2 overflow-x-auto" 
-        style={{ 
+      <div
+        className="flex gap-3 pb-2 overflow-x-auto"
+        style={{
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'smooth',
           overscrollBehavior: 'contain',
@@ -154,7 +152,7 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
         {MOODS.map((mood) => {
           const isSelected = highlightedMood === mood.id;
           const moodColor = mood.color.replace('bg-', '');
-          
+
           return (
             <button
               key={mood.id}
@@ -167,17 +165,16 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
                 }
               }}
               disabled={isDisabled}
-              className={`flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-2xl transition-all touch-target theme-transition relative ${
-                isSelected ? 'scale-110 ring-4' : 'active:scale-95'
-              } ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-2xl transition-all touch-target theme-transition relative ${isSelected ? 'scale-110 ring-4' : 'active:scale-95'
+                } ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
               aria-label={mood.label}
               style={{
                 backgroundColor: isSelected ? moodColor : `${moodColor}80`,
-                border: isSelected 
-                  ? `3px solid ${accentColor}` 
+                border: isSelected
+                  ? `3px solid ${accentColor}`
                   : `2px solid ${isSelected ? accentColor : borderColor}`,
-                boxShadow: isSelected 
-                  ? `0 6px 20px ${accentColor}60, 0 0 0 2px ${accentColor}40` 
+                boxShadow: isSelected
+                  ? `0 6px 20px ${accentColor}60, 0 0 0 2px ${accentColor}40`
                   : '0 2px 8px rgba(0, 0, 0, 0.1)',
                 transform: isSelected ? 'scale(1.1)' : 'scale(1)',
                 transition: 'all 0.2s ease-in-out',
@@ -187,10 +184,10 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
               {mood.emoji}
               {isSelected && (
                 <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center"
-                     style={{ 
-                       backgroundColor: accentColor,
-                       border: `2px solid ${theme === 'dark' ? '#1a1a1a' : '#F7F5F2'}`
-                     }}>
+                  style={{
+                    backgroundColor: accentColor,
+                    border: `2px solid ${theme === 'dark' ? '#1a1a1a' : '#F7F5F2'}`
+                  }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#FFFFFF" />
                   </svg>
@@ -203,9 +200,8 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
       {isMoodSelectedToday && (
         <p
           className="text-xs font-light mt-3 text-center theme-transition"
-          style={{ 
+          style={{
             color: textSecondary,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif'
           }}
         >
           You've already logged your mood today. Come back tomorrow!

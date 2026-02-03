@@ -2,6 +2,12 @@ import React from 'react';
 import { FeatureCard } from '../shared/FeatureCard';
 import { useAppState } from '../../contexts/AppStateContext';
 
+// Import Premium Illustrations
+import chatTaraImg from '../../assets/images/chat-tara.png';
+import assessmentImg from '../../assets/images/assessment.png';
+import appointmentImg from '../../assets/images/appointment.png';
+import breathingImg from '../../assets/images/breathing.png';
+
 export const GetStartedCards: React.FC = () => {
   const {
     navigateToChat,
@@ -11,11 +17,12 @@ export const GetStartedCards: React.FC = () => {
   } = useAppState();
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-4">
       <FeatureCard
         id="tara"
         title="Chat with TARA"
         description="Get instant support"
+        imageSrc={chatTaraImg}
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -28,8 +35,9 @@ export const GetStartedCards: React.FC = () => {
       />
       <FeatureCard
         id="assessments"
-        title="Assessments"
-        description="Track your wellness"
+        title="Take Assessment"
+        description="Check your wellness"
+        imageSrc={assessmentImg}
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -42,8 +50,9 @@ export const GetStartedCards: React.FC = () => {
       />
       <FeatureCard
         id="bookings"
-        title="Appointment"
+        title="Book Appointment"
         description="Schedule session"
+        imageSrc={appointmentImg}
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -56,8 +65,9 @@ export const GetStartedCards: React.FC = () => {
       />
       <FeatureCard
         id="breathing"
-        title="Breathing"
+        title="Breathe with us!"
         description="Find calm & peace"
+        imageSrc={breathingImg}
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="4" fill="currentColor" opacity="0.9" />
@@ -80,7 +90,7 @@ export const QuickAccessCards: React.FC = () => {
   } = useAppState();
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-4">
       <FeatureCard
         id="tools"
         title="Tools & Sounds"
@@ -111,7 +121,7 @@ export const QuickAccessCards: React.FC = () => {
       />
       <FeatureCard
         id="journal"
-        title="Journal"
+        title="Mindful Journal"
         description="Personal reflections"
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

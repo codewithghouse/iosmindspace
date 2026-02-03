@@ -7,157 +7,97 @@ export interface FeatureCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
+  imageSrc?: string;
   onClick: () => void;
   className?: string;
 }
-
-const getCardColorClass = (id: string, theme: 'light' | 'dark'): string => {
-  if (theme === 'dark') {
-    const darkCardColors: { [key: string]: string } = {
-      'tara': 'bg-gray-800',
-      'assessments': 'bg-blue-600',
-      'selfcare': 'bg-pink-600',
-      'bookings': 'bg-yellow-600',
-      'breathing': 'bg-orange-600',
-      'tools': 'bg-gray-700',
-      'journal': 'bg-gray-600',
-      'articles': 'bg-[#5A6A5A]'
-    };
-    return darkCardColors[id] || darkCardColors['tara'];
-  } else {
-    const lightCardColors: { [key: string]: string } = {
-      'tara': 'bg-white',
-      'assessments': 'bg-blue-300',
-      'selfcare': 'bg-pink-300',
-      'bookings': 'bg-yellow-300',
-      'breathing': 'bg-orange-300',
-      'tools': 'bg-gray-300',
-      'journal': 'bg-gray-400',
-      'articles': 'bg-[#7A8A7A]'
-    };
-    return lightCardColors[id] || lightCardColors['tara'];
-  }
-};
-
-const getCardTextStyle = (id: string, theme: 'light' | 'dark', isTitle: boolean = true) => {
-  if (theme === 'dark') {
-    return {
-      color: '#FFFFFF',
-      fontWeight: isTitle ? '700' : '600',
-      textShadow: isTitle 
-        ? '0 2px 10px rgba(0,0,0,0.5), 0 1px 5px rgba(0,0,0,0.4)' 
-        : '0 1px 6px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.35)',
-      letterSpacing: isTitle ? '-0.3px' : '0px'
-    };
-  } else {
-    const needsDarkText = ['tara', 'articles', 'bookings', 'tools'];
-    const isDarkText = needsDarkText.includes(id);
-    
-    if (isDarkText) {
-      return {
-        color: '#1A1A1A',
-        fontWeight: isTitle ? '700' : '600',
-        textShadow: '0 1px 3px rgba(255,255,255,0.8), 0 1px 1px rgba(0,0,0,0.1)',
-        letterSpacing: isTitle ? '-0.3px' : '0px'
-      };
-    } else {
-      return {
-        color: '#FFFFFF',
-        fontWeight: isTitle ? '700' : '600',
-        textShadow: isTitle 
-          ? '0 3px 10px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.3)' 
-          : '0 2px 6px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.25)',
-        letterSpacing: isTitle ? '-0.3px' : '0px'
-      };
-    }
-  }
-};
-
-const getIconContainerStyle = (id: string, theme: 'light' | 'dark') => {
-  const needsDarkText = ['tara', 'articles', 'bookings', 'tools'];
-  const isWhiteText = !needsDarkText.includes(id) || theme === 'dark';
-  
-  if (theme === 'dark') {
-    return {
-      containerClass: 'bg-white/20 backdrop-blur-md ring-2 ring-white/40',
-      iconColor: '#FFFFFF'
-    };
-  } else {
-    if (isWhiteText) {
-      return {
-        containerClass: 'bg-white/30 backdrop-blur-md ring-2 ring-white/50',
-        iconColor: '#FFFFFF'
-      };
-    } else {
-      return {
-        containerClass: 'bg-white/20 backdrop-blur-md ring-2 ring-white/30',
-        iconColor: '#1A1A1A'
-      };
-    }
-  }
-};
 
 export const FeatureCard: React.FC<FeatureCardProps> = ({
   id,
   title,
   description,
   icon,
+  imageSrc,
   onClick,
   className = '',
 }) => {
   const { theme } = useTheme();
-  const cardColor = getCardColorClass(id, theme);
-  const textStyle = getCardTextStyle(id, theme, true);
-  const descStyle = getCardTextStyle(id, theme, false);
-  const iconStyle = getIconContainerStyle(id, theme);
 
   return (
     <motion.button
       onClick={onClick}
-      className={`group w-full h-[150px] rounded-3xl p-0 overflow-hidden transition-all duration-300 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-[#A2AD9C] text-left touch-target flex flex-col relative ${className}`}
+      className={`group relative w-full h-[160px] rounded-[32px] overflow-hidden text-left touch-target flex flex-col transition-all duration-300 ${className}`}
       style={{
-        boxShadow: theme === 'dark' 
-          ? '0 8px 24px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2)'
-          : '0 8px 24px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.1), 0 0 0 1px rgba(162, 173, 156, 0.2)'
+        background: theme === 'dark'
+          ? 'linear-gradient(145deg, rgba(40,40,40,0.9), rgba(30,30,30,0.95))'
+          : 'linear-gradient(145deg, #FFFFFF, #F8F9FA)',
+        boxShadow: theme === 'dark'
+          ? '0 4px 20px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05)'
+          : '0 10px 30px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.8)',
+        border: theme === 'dark'
+          ? '1px solid rgba(255,255,255,0.08)'
+          : '1px solid rgba(255,255,255,0.6)'
       }}
-      whileHover={{ scale: 1.01 }}
+      whileHover={{ scale: 1.01, translateY: -2 }}
       whileTap={{ scale: 0.98 }}
     >
-      {/* Background */}
-      <div className={`absolute inset-0 ${cardColor} rounded-3xl`} />
-      
-      {/* Subtle overlay gradient for depth */}
-      <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'dark' ? 'from-black/20 via-transparent to-transparent' : 'from-black/10 via-transparent to-transparent'} pointer-events-none z-10`} />
-      
-      {/* Content */}
-      <div className="relative z-10 flex flex-col h-full p-4">
-        {/* Icon Container */}
-        <div className={`w-12 h-12 rounded-2xl ${iconStyle.containerClass} flex items-center justify-center mb-3 shadow-lg flex-shrink-0`}>
-          <div className="scale-110" style={{ color: iconStyle.iconColor }}>
-            {icon}
-          </div>
+      {/* Premium Glass Sheen */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+
+      {/* Content Container */}
+      <div className="relative z-20 flex flex-col h-full p-5 justify-between">
+
+        {/* Header: Title & Desc */}
+        <div className="flex flex-col gap-1 max-w-[70%]">
+          <h3
+            className="text-[17px] font-semibold leading-tight tracking-tight"
+            style={{
+              color: 'var(--text-primary)',
+              fontFamily: "'Inter', -apple-system, sans-serif"
+            }}
+          >
+            {title}
+          </h3>
+          <p
+            className="text-[13px] font-medium leading-normal"
+            style={{
+              color: 'var(--text-secondary)',
+              fontFamily: "'Inter', -apple-system, sans-serif"
+            }}
+          >
+            {description}
+          </p>
         </div>
-        
-        <h3
-          className="text-[17px] mb-1.5 flex-1"
-          style={{ 
-            ...textStyle,
-            fontFamily: "'Fira Sans', sans-serif"
-          }}
-        >
-          {title}
-        </h3>
-        <p
-          className="text-[13px]"
-          style={{ 
-            ...descStyle,
-            fontFamily: "'Fira Sans', sans-serif",
-            opacity: 0.85
-          }}
-        >
-          {description}
-        </p>
+
+        {/* Dynamic Illustration or Icon */}
+        {imageSrc ? (
+          <div className="absolute bottom-[-10px] right-[-10px] w-[110px] h-[110px] transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1">
+            <img
+              src={imageSrc}
+              alt={title}
+              className="w-full h-full object-contain drop-shadow-xl"
+              style={{ filter: theme === 'dark' ? 'brightness(0.9)' : 'none' }}
+            />
+          </div>
+        ) : (
+          /* Fallback Elegant Icon Container */
+          <div className="absolute bottom-4 right-4 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:bg-accent/10"
+            style={{
+              background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+              color: 'var(--accent-color)'
+            }}>
+            <div className="scale-110 opacity-90">
+              {icon}
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Soft Bottom Highlight */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-accent/5 to-transparent opacity-50 z-0"
+        style={{ color: 'var(--accent-color)' }}
+      />
     </motion.button>
   );
 };

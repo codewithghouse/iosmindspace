@@ -4,61 +4,71 @@
 
 /* Theme Variables */
 :root {
-  --bg-primary: #F7F5F2;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(255, 255, 255, 0.85);
-  --bg-base: #F7F5F2;
-  /* Base background for html/body */
-  --text-primary: #1A1A1A;
-  --text-secondary: #4A4A4A;
-  --border-color: rgba(162, 173, 156, 0.4);
-  --accent-color: #7A8A7A;
-  --accent-light: #6A7A6A;
+  /* Premium Palette - Mature & Soothing */
+  --bg-primary: #F0F2F0;
+  /* Soft misty gray/green tint */
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F7F9F8;
+  --bg-base: #F0F2F0;
 
-  /* Gradient Colors - Enhanced for better visibility */
-  --gradient-primary: linear-gradient(135deg, #7A8A7A, #6A7A6A);
-  --gradient-secondary: linear-gradient(135deg, #8A9A8A, #7A8A7A);
-  --gradient-tertiary: linear-gradient(135deg, #9AAA9A, #8A9A8A);
-  --gradient-quaternary: linear-gradient(135deg, #7A8A7A, #5A6A5A);
+  --text-primary: #2C3E50;
+  /* Deep slate, readable but not harsh black */
+  --text-secondary: #5D6D7E;
+  /* Soft slate gray */
+  --text-muted: #839192;
 
-  /* Glassmorphism - Enhanced opacity */
-  --glass-bg: rgba(255, 255, 255, 0.9);
-  --glass-border: rgba(162, 173, 156, 0.5);
-  --glass-overlay: rgba(255, 255, 255, 0.3);
+  --border-color: rgba(162, 173, 156, 0.2);
 
-  /* Shadows - Enhanced for better depth */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.18);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.25);
+  /* Accents - Muted & Earthy */
+  --accent-color: #7DCEA0;
+  /* Soft Sage */
+  --accent-light: #A9DFBF;
+  --accent-dark: #52BE80;
+
+  --color-sage: #88B04B;
+  --color-sand: #E3D9C6;
+  --color-slate: #778899;
+  --color-blush: #E6B0AA;
+
+  /* Gradient Colors - Subtle & Premium */
+  --gradient-primary: linear-gradient(135deg, #7A8A7A, #A2AD9C);
+  --gradient-secondary: linear-gradient(135deg, #FFEFBA, #FFFFFF);
+  /* Warm light */
+
+  /* Glassmorphism - Premium Polish */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-overlay: rgba(255, 255, 255, 0.2);
+
+  /* Shadows - Soft, Diffused "Apple" style */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: rgba(40, 40, 40, 0.8);
-  --bg-tertiary: rgba(50, 50, 50, 0.6);
-  --bg-base: #1a1a1a;
-  /* Base background for html/body */
-  --text-primary: #E5E5E5;
-  --text-secondary: #B0B0B0;
-  --border-color: rgba(100, 100, 100, 0.3);
-  --accent-color: #7A8A7A;
-  --accent-light: #6A7A6A;
+  --bg-primary: #1C1C1E;
+  /* iOS Deep Dark */
+  --bg-secondary: #2C2C2E;
+  --bg-tertiary: #3A3A3C;
+  --bg-base: #1C1C1E;
 
-  /* Gradient Colors - Dark Variants */
-  --gradient-primary: linear-gradient(135deg, #4A5A4A, #3A4A3A);
-  --gradient-secondary: linear-gradient(135deg, #5A6A5A, #4A5A4A);
-  --gradient-tertiary: linear-gradient(135deg, #6A7A6A, #5A6A5A);
-  --gradient-quaternary: linear-gradient(135deg, #4A5A4A, #2A3A2A);
+  --text-primary: #F2F2F7;
+  --text-secondary: #AEAEB2;
+  --text-muted: #636366;
 
-  /* Glassmorphism - Dark */
-  --glass-bg: rgba(40, 40, 40, 0.7);
-  --glass-border: rgba(120, 120, 120, 0.2);
-  --glass-overlay: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.1);
 
-  /* Shadows - Dark (lighter shadows) */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --accent-color: #7DCEA0;
+
+  --glass-bg: rgba(44, 44, 46, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Smooth transitions for CSS custom properties - natural theme changes */
@@ -151,16 +161,16 @@ body {
 
 
 
-/* Global Font - Fira Sans */
+/* Global Font - Premium Inter */
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   overscroll-behavior: none;
-  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Allow scrolling only in specific scrollable containers */

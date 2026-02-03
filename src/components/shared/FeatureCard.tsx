@@ -23,19 +23,23 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
 }) => {
   const { theme } = useTheme();
 
+  const hasCustomBackground = className.includes('bg-');
+
   return (
     <motion.button
       onClick={onClick}
       className={`group relative w-full h-[160px] rounded-[32px] overflow-hidden text-left touch-target flex flex-col transition-all duration-300 ${className}`}
       style={{
-        background: theme === 'dark'
-          ? 'linear-gradient(145deg, rgba(40,40,40,0.9), rgba(30,30,30,0.95))'
-          : 'linear-gradient(145deg, #FFFFFF, #F8F9FA)',
+        background: hasCustomBackground
+          ? undefined
+          : (theme === 'dark'
+            ? 'linear-gradient(145deg, rgba(40,40,40,0.9), rgba(30,30,30,0.95))'
+            : 'linear-gradient(145deg, #FFFFFF, #F8F9FA)'),
         boxShadow: theme === 'dark'
-          ? '0 4px 20px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05)'
-          : '0 10px 30px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.8)',
+          ? '0 4px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.05)'
+          : '0 12px 28px -6px rgba(0,0,0,0.08), 0 0 0 1px rgba(255,255,255,0.5) inset',
         border: theme === 'dark'
-          ? '1px solid rgba(255,255,255,0.08)'
+          ? '1px solid rgba(255,255,255,0.1)'
           : '1px solid rgba(255,255,255,0.6)'
       }}
       whileHover={{ scale: 1.01, translateY: -2 }}
@@ -48,21 +52,23 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
       <div className="relative z-20 flex flex-col h-full p-5 justify-between">
 
         {/* Header: Title & Desc */}
-        <div className="flex flex-col gap-1 max-w-[70%]">
+        <div className="flex flex-col gap-1 w-full relative z-20">
           <h3
-            className="text-[17px] font-semibold leading-tight tracking-tight"
+            className="text-[17px] font-bold leading-tight tracking-tight scale-y-100"
             style={{
-              color: 'var(--text-primary)',
-              fontFamily: "'Inter', -apple-system, sans-serif"
+              color: '#1A202C', // Using absolute dark slate for contrast in light mode
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              textShadow: '0 2px 4px rgba(255,255,255,0.9), 0 0 2px rgba(255,255,255,1)' // Strong white glow/shadow
             }}
           >
             {title}
           </h3>
           <p
-            className="text-[13px] font-medium leading-normal"
+            className="text-[13px] font-semibold leading-normal"
             style={{
-              color: 'var(--text-secondary)',
-              fontFamily: "'Inter', -apple-system, sans-serif"
+              color: '#2D3748', // Dark slate gray 
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              textShadow: '0 1px 2px rgba(255,255,255,0.9)' // White glow
             }}
           >
             {description}
@@ -71,14 +77,28 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
 
         {/* Dynamic Illustration or Icon */}
         {imageSrc ? (
-          <div className="absolute bottom-[-10px] right-[-10px] w-[110px] h-[110px] transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1">
-            <img
-              src={imageSrc}
-              alt={title}
-              className="w-full h-full object-contain drop-shadow-xl"
-              style={{ filter: theme === 'dark' ? 'brightness(0.9)' : 'none' }}
+          <>
+            {/* Full Cover Image */}
+            <div className="absolute inset-0 z-0">
+              <img
+                src={imageSrc}
+                alt={title}
+                className="w-full h-full object-cover"
+                style={{
+                  filter: theme === 'dark' ? 'brightness(0.9)' : 'none',
+                  mixBlendMode: 'multiply',
+                  opacity: 0.85
+                }}
+              />
+            </div>
+            {/* Stronger Gradient Overlay */}
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={{
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 35%, rgba(255,255,255,0) 100%)'
+              }}
             />
-          </div>
+          </>
         ) : (
           /* Fallback Elegant Icon Container */
           <div className="absolute bottom-4 right-4 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:bg-accent/10"

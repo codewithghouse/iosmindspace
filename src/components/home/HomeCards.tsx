@@ -18,26 +18,13 @@ export const GetStartedCards: React.FC = () => {
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <FeatureCard
-        id="tara"
-        title="Chat with TARA"
-        description="Get instant support"
-        imageSrc={chatTaraImg}
-        icon={
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"
-              fill="currentColor"
-            />
-          </svg>
-        }
-        onClick={navigateToChat}
-      />
+      {/* 1. Take Assessment (Soft Lavender) */}
       <FeatureCard
         id="assessments"
         title="Take Assessment"
         description="Check your wellness"
         imageSrc={assessmentImg}
+        className="!bg-[#E8DAEF] dark:!bg-[#5B2C6F]"
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -48,11 +35,14 @@ export const GetStartedCards: React.FC = () => {
         }
         onClick={navigateToAssessments}
       />
+
+      {/* 2. Book Appointment (Soft Apricot/Sand) */}
       <FeatureCard
         id="bookings"
         title="Book Appointment"
         description="Schedule session"
         imageSrc={appointmentImg}
+        className="!bg-[#FAE5D3] dark:!bg-[#BA4A00]"
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -63,11 +53,32 @@ export const GetStartedCards: React.FC = () => {
         }
         onClick={navigateToBooking}
       />
+
+      {/* 3. Say Hi to Tara (Soft Sky Blue) */}
+      <FeatureCard
+        id="tara"
+        title="Say Hi to Tara!"
+        description="Get instant support"
+        imageSrc={chatTaraImg}
+        className="!bg-[#D6EAF8] dark:!bg-[#2874A6]"
+        icon={
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"
+              fill="currentColor"
+            />
+          </svg>
+        }
+        onClick={navigateToChat}
+      />
+
+      {/* 4. Breathe with us (Soft Mint Green) */}
       <FeatureCard
         id="breathing"
         title="Breathe with us!"
         description="Find calm & peace"
         imageSrc={breathingImg}
+        className="!bg-[#D5F5E3] dark:!bg-[#1E8449]"
         icon={
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="4" fill="currentColor" opacity="0.9" />

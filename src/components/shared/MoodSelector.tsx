@@ -112,7 +112,7 @@ export const MoodList: React.FC<{ onMoodSelect?: (moodId: string) => void }> = (
   const highlightedMood = currentMood || selectedMood;
 
   return (
-    <div className="mb-12" id="mood-selector">
+    <div className="mb-1" id="mood-selector">
       <div className="flex items-center justify-between mb-4">
         <h2
           className="text-[18px] font-medium transition-colors duration-300"
